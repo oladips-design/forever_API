@@ -1,10 +1,10 @@
 import { Roles } from 'src/utils/common/user-roles.enum';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn,Timestamp, UpdateDateColumn } from 'typeorm';
 
 @Entity("users")
 export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
     @Column()
     name: string;
@@ -12,13 +12,16 @@ export class UserEntity {
     @Column({unique: true, nullable: true})
     email: string;
 
-    @Column({nullable: true})
+    @Column({nullable: true, select: false})
     password_hash: string;
 
     @Column({type: 'enum', enum: Roles, default: Roles.GUEST})
     role: Roles;
 
     @CreateDateColumn()
-    created_at: Date;
+    created_at: Timestamp;
+
+    @UpdateDateColumn()
+    updated_at: Timestamp;
 
 }
